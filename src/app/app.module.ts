@@ -4,12 +4,16 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BindingComponent } from './binding/binding.component';
+import { ProduitsComponent } from './produits/produits.component';
+import { FormulaireComponent } from './formulaire/formulaire.component';
+import { AddProduitComponent } from './add-produit/add-produit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BindingComponent,
+    ProduitsComponent,
+    FormulaireComponent,
+    AddProduitComponent,
   ],
   imports: [
     BrowserModule,
