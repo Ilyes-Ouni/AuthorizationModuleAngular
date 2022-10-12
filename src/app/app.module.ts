@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { ProduitsComponent } from './produits/produits.component';
 import { FormulaireComponent } from './formulaire/formulaire.component';
 import { AddProduitComponent } from './add-produit/add-produit.component';
+import { UpdateProduitComponent } from './update-produit/update-produit.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { AddProduitComponent } from './add-produit/add-produit.component';
     ProduitsComponent,
     FormulaireComponent,
     AddProduitComponent,
+    UpdateProduitComponent,
   ],
   imports: [
     BrowserModule,
