@@ -1,48 +1,44 @@
 import { Injectable } from '@angular/core';
 import { Produit } from '../modlèle';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
+const httpOptions = {
+  headers: new HttpHeaders( {'Content-Type': 'application/json'} )
+  };
 
 @Injectable({
 providedIn: 'root'
 })
 export class ProduitService {
-produit!: Produit;
-produits : Produit[]; //un tableau de Produit
-constructor() {
+  produit!: Produit;
+  produits!: Produit[]; //un tableau de Produit
+  apiURL:string = environment.apiURL;
 
-  this.produits = [
-      { idProduit : 1, nomProduit : "PC Asus", prixProduit : 3000.600, dateCreation: new Date("01/14/2011")},
-      { idProduit : 2, nomProduit : "Imprimante Epson", prixProduit : 450, dateCreation : new Date("12/17/2010")},
-      { idProduit : 3, nomProduit :"Tablette Samsung", prixProduit : 900.123, dateCreation : new Date("02/20/2020")}
-    ];
-  }
-  listeProduits():Produit[] {
-    return this.produits;
-  }
+ constructor(private http: HttpClient) {}
 
-  ajouterProduit( prod: Produit){
-    console.log(prod)
-    this.produits.push(prod);
-
-  }
-
-  supprimerProduit( prod: Produit){
-    const index = this.produits.indexOf(prod, 0);
-    if (index > -1) {
-      this.produits.splice(index, 1);
+  listeProduit(): Observable<Produit[]>{
+    return this.http.get<Produit[]>(this.apiURL);
     }
-  //
+
+  ajouterProduit( prod: Produit):Observable<Produit>{
+    return this.http.post<Produit>(this.apiURL, prod, httpOptions);
   }
 
-  consulterProduit(id:number): Produit{
-    this.produit = this.produits.find(p => p.idProduit == id)!;
-    return this.produit;
-  }
+  supprimerProduit(id : number) {
+    const url = `${this.apiURL}/${id}`;
+    return this.http.delete(url, httpOptions);
+    }
 
-  updateProduit(p:Produit){
-        this.supprimerProduit(p);
-        this.ajouterProduit(p);
-        this.trierProduits();
-  }
+    consulterProdui(id: number): Observable<Produit> {
+      const url = `${this.apiURL}/${id}`;
+      return this.http.get<Produit>(url);
+    }
+
+    updateProduit(prod :Produit) : Observable<Produit>{
+      return this.http.put<Produit>(this.apiURL, prod, httpOptions);
+    }
 
 
   trierProduits(){

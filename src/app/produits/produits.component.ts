@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Produit } from '../modlèle';
 import { ProduitService } from '../services/produit.service';
 
@@ -8,19 +9,35 @@ import { ProduitService } from '../services/produit.service';
   styleUrls: ['./produits.component.css']
 })
 export class ProduitsComponent implements OnInit {
-  produits: Produit[];
+  produits: any;
 
-  constructor(private produitService: ProduitService) {
-    this.produits = produitService.listeProduits();
+  constructor(private produitService: ProduitService, private router: Router) {}
+
+    ngOnInit(): void {
+      this.produitService.listeProduit()
+      .subscribe(prods => {
+        console.log(prods);
+        this.produits = prods;
+      });
     }
-  ngOnInit(): void {
-  }
 
-  supprimerProduit(p: Produit){
-    //console.log(p);
+    supprimerProduit(p: any)
+    {
     let conf = confirm("Etes-vous sûr ?");
-     if (conf) this.produitService.supprimerProduit(p);
-  }
+    if (conf)
+    this.produitService.supprimerProduit(p.idProduit).subscribe(() => {
+    console.log("produit supprimé");
+    this.SuprimerProduitDuTableau(p);
+    });
+    }
+
+    SuprimerProduitDuTableau(prod : Produit) {
+      this.produits.forEach((cur: { idProduit: number | undefined; }, index: any) => {
+        if(prod.idProduit=== cur.idProduit) {
+        this.produits.splice(index, 1);
+        }
+      });
+    }
 
 }
 
