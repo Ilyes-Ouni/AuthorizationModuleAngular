@@ -14,13 +14,15 @@ export class UpdateProduitComponent implements OnInit {
 constructor(private activatedRoute: ActivatedRoute, private produitService: ProduitService, private router :Router) { }
 
   ngOnInit() {
-    this.produitService.consulterProdui(this.activatedRoute.snapshot.params['id']).
-    subscribe( prod =>{ this.currentProduit = prod; } ) ;
+    this.produitService.consulterProduit(this.activatedRoute.snapshot.params['id']).
+    subscribe( prod =>{
+      this.currentProduit = prod;
+    }) ;
   }
 
   updateProduit() {
     this.produitService.updateProduit(this.currentProduit)
-    .subscribe(prod => {
+    .subscribe((prod:any) => {
       this.router.navigate(['produits']);
     },(error) => { alert("Problème lors de la modification !"); }
     );

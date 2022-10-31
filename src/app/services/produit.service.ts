@@ -20,7 +20,7 @@ export class ProduitService {
 
   listeProduit(): Observable<Produit[]>{
     return this.http.get<Produit[]>(this.apiURL);
-    }
+  }
 
   ajouterProduit( prod: Produit):Observable<Produit>{
     return this.http.post<Produit>(this.apiURL, prod, httpOptions);
@@ -31,7 +31,7 @@ export class ProduitService {
     return this.http.delete(url, httpOptions);
     }
 
-    consulterProdui(id: number): Observable<Produit> {
+    consulterProduit(id: number): Observable<Produit> {
       const url = `${this.apiURL}/${id}`;
       return this.http.get<Produit>(url);
     }
